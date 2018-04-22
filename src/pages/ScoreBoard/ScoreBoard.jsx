@@ -1,24 +1,7 @@
 import React, { Component } from 'react';
 import { range } from 'lodash';
-import * as firebase from 'firebase';
-import 'firebase/firestore';
-import './App.css';
-
-// https://reactjs.org/docs/forms.html
-
-const config = {
-  apiKey: "AIzaSyAgOjKjD2UQ1JFqWiW98rruQWcEKoOJUc8",
-  authDomain: "golf-boys.firebaseapp.com",
-  databaseURL: "https://golf-boys.firebaseio.com",
-  projectId: "golf-boys",
-  storageBucket: "golf-boys.appspot.com",
-  messagingSenderId: "213083351616"
-};
-
-const app = firebase.initializeApp(config);
-const db = firebase.firestore();
-
-
+import './ScoreBoard.css';
+import { app, db } from '../Firebase'
 
 /**
  * 

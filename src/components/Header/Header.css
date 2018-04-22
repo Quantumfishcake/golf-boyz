@@ -1,0 +1,17 @@
+.header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: rgba(0,0,0, 0.8);
+    padding: 8px;
+}
+
+.header-row a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.spacer {
+    flex: 1;
+}
