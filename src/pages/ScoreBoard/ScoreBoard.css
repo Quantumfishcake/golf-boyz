@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.holeTable {
+  width: 100%;
+}
+
 .holeTable td, .holeTable th {
   border: 1px solid black;
 }

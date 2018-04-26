@@ -109,6 +109,8 @@ class App extends Component {
     round: {},
   }
   componentWillMount() {
+    const { match: { params: { scoreId } } } = this.props;
+
     // Get the users
     db.collection("users").get().then((querySnapshot) => {
       this.setState({
@@ -117,19 +119,17 @@ class App extends Component {
           data: doc.data(),
         }))
       })
-
     })
     // Get the rounds
-    db.collection("rounds").get().then((querySnapshot) => {
-      const rounds = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        data: doc.data(),
-      }))
-
-      this.setState({
-        round: rounds[0],
-      })
-    })
+    db.collection("rounds")
+      .doc(scoreId)
+      .onSnapshot((querySnapshot) => {
+        const round = {
+          id: querySnapshot.id,
+          data: querySnapshot.data(),
+        }
+        this.setState({ round })      
+      });
   }
   handleChange = (playerId, holeId, event) => {
     const { round } = this.state;
@@ -150,7 +150,27 @@ class App extends Component {
               { holes.map(hole => <th key={hole}>{ hole + 1}</th>)}
 
             </tr>
-            { players.map(player => (
+            { round && round.data && round.data.scores && round.data.scores.map(player => ( 
+              <tr key={player.userId}>
+                {/* <td>{ getInitials(players.find(x => x.id === player.userId)) }</td> */}
+                <td>DR</td>
+                { player.holeScores.map(hole => {
+                  if (round.data) {
+                    return (
+                      <td key={hole}>
+                        <input 
+                          value={ [hole] } 
+                          // className="hole" 
+                          onChange={ (event) => this.handleChange(player.id, hole, event) }
+                        />
+                      </td>
+                    )  
+                  }
+                })}
+              </tr>
+            )) }
+
+            {/* { players.map(player => (
               <tr key={player.id}>
                 <td>{ getInitials(player.data) }</td>
                 { holes.map(hole => {
@@ -168,7 +188,7 @@ class App extends Component {
                   }
                 })}
               </tr>
-            )) }
+            )) } */}
           </tbody>
         </table>
       </div>
